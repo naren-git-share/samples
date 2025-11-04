@@ -19,6 +19,15 @@ jobs:
           dotnet-version: '9.x'
           include-prerelease: true
 
+      - name: List directories for debugging
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Listing root ==="
+          ls -la
+          echo "=== Looking for server-side-events ==="
+          find . -name "*.csproj" -type f
+      
       - name: Build with dotnet
         run: |
           cd server-side-events/server
