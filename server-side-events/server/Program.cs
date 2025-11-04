@@ -31,6 +31,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 
+// Serve static files from wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
+
+// Fallback to index.html for SPA routing
+app.MapFallbackToFile("index.html");
 
 app.Run();

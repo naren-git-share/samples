@@ -4,40 +4,18 @@ A complete real-time application demonstrating Server-Side Events (SSE) with ASP
 
 ## Quick Start
 
-### 1. Start the Server (Terminal 1)
+### 1. Run the Application
 ```powershell
-# Windows
-.\start-server.bat
-
-# Or manually
 cd server
 dotnet run
 ```
 
-### 2. Start the Client (Terminal 2)
+The application serves both the API and the client from a single server.
 
-**Option A: Using npm (if Node.js is installed)**
-```powershell
-cd client
-npm install  # First time only
-npm run dev
-```
+### 2. Open in Browser
+Navigate to: http://localhost:5105
 
-**Option B: Using Python**
-```powershell
-cd client
-python -m http.server 8080
-```
-
-**Option C: Using .NET**
-```powershell
-cd client
-dotnet tool install -g dotnet-serve
-dotnet serve -p 8080
-```
-
-### 3. Open in Browser
-Navigate to: http://localhost:8080
+Both the client UI and API are served from the same application.
 
 ## What You'll See
 
@@ -72,3 +50,24 @@ See [instructions.md](./instructions.md) for detailed implementation notes, arch
 Open multiple browser windows to see real-time synchronization of:
 - Number countdowns across all clients
 - Chat messages broadcasting to all users instantly
+
+## Deploy to Azure
+
+### 🚀 Automated Deployment with GitHub Actions
+
+This repository includes a GitHub Actions workflow for automated deployment.
+
+**Recommended Approach:**
+
+1. Push your code to GitHub
+2. Create an App Service in Azure Portal
+3. Use **Deployment Center** in Azure Portal to connect to GitHub
+4. Azure will automatically set up the GitHub Actions workflow
+5. Every push to main branch triggers automatic deployment!
+
+**See [GITHUB_ACTIONS_SETUP.md](./GITHUB_ACTIONS_SETUP.md) for detailed step-by-step instructions.**
+
+### Requirements
+- Azure subscription  
+- GitHub repository
+- Globally unique app name for Azure App Service

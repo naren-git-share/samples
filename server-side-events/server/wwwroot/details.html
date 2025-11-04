@@ -325,7 +325,8 @@
     <script>
         const { createApp } = Vue;
 
-        const API_BASE_URL = 'http://localhost:5105/api';
+        // Use relative URL so it works both locally and in Azure
+        const API_BASE_URL = '/api';
 
         createApp({
             data() {

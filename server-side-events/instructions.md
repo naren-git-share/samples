@@ -31,12 +31,11 @@ server-side-events/
 │   ├── Services/
 │   │   ├── NumbersService.cs       # Singleton service managing number countdown
 │   │   └── ChatService.cs          # Singleton service managing chat broadcasts
+│   ├── wwwroot/                     # Static files (Vue.js Client)
+│   │   ├── index.html              # Login page (username entry)
+│   │   └── details.html            # Dashboard page (tiles + chat)
 │   ├── Program.cs                  # Application configuration & startup
 │   └── ServerSideEventsApi.csproj  # Project file
-│
-├── client/                          # Vue.js Client
-│   ├── index.html                  # Login page (username entry)
-│   └── details.html                # Dashboard page (tiles + chat)
 │
 └── instructions.md                  # This file
 
@@ -126,7 +125,7 @@ eventSource.onerror = (error) => {
   - Python 3.x
   - .NET dotnet-serve tool
 
-### Step 1: Start the Server
+### Start the Application
 
 ```powershell
 # Navigate to server folder
@@ -135,49 +134,22 @@ cd server
 # Restore dependencies (if needed)
 dotnet restore
 
-# Run the API (will run on http://localhost:5000)
+# Run the application
 dotnet run
 ```
 
-The API will start on `http://localhost:5000` (or `https://localhost:5001` for HTTPS).
+The application will start on `http://localhost:5105` (or the port specified in your launchSettings.json).
 
-**Note**: If the API runs on a different port, update the `API_BASE_URL` in `client/details.html`:
-```javascript
-const API_BASE_URL = 'http://localhost:5000/api';
-```
+Both the API and the client are served from the same server:
+- Client (UI): `http://localhost:5105/` (index.html)
+- Dashboard: `http://localhost:5105/details.html`
+- API: `http://localhost:5105/api/`
 
-### Step 2: Start the Client
+The client files are served from the `wwwroot` folder using ASP.NET Core's static file middleware.
 
-**Option A: Using npm (Recommended - requires Node.js)**
-```powershell
-# Navigate to client folder
-cd client
+### Use the Application
 
-# Install dependencies (first time only)
-npm install
-
-# Start development server with Vite
-npm run dev
-```
-
-**Option B: Using Python**
-```powershell
-cd client
-python -m http.server 8080
-```
-
-**Option C: Using .NET dotnet-serve**
-```powershell
-cd client
-dotnet tool install -g dotnet-serve  # First time only
-dotnet serve -p 8080
-```
-
-The client will be available at `http://localhost:8080`.
-
-### Step 3: Use the Application
-
-1. Open browser to `http://localhost:8080` (or the file directly)
+1. Open browser to `http://localhost:5105`
 2. Enter your username and click "Enter Dashboard"
 3. View the live countdown of 26 numbers
 4. Open multiple browser windows/tabs to test real-time chat
@@ -275,5 +247,31 @@ const API_BASE_URL = 'http://localhost:5000/api';
 - Numbers reset on server restart
 - Designed for development/demo purposes
 - For production, consider adding authentication, database persistence, and rate limiting
+
+## ☁️ Azure Deployment
+
+### Single App Service Deployment
+
+The application is configured to run as a single ASP.NET Core app with the client files served from the `wwwroot` folder. This allows deployment to a single Azure App Service.
+
+### Deployment via GitHub Actions
+
+The recommended approach is to use Azure Portal's Deployment Center:
+
+1. Push your code to GitHub
+2. Create an App Service in Azure Portal (.NET 9 runtime)
+3. In the App Service, go to **Deployment Center**
+4. Select **GitHub** as the source
+5. Authorize and select your repository and branch
+6. Azure will automatically create the GitHub Actions workflow
+7. Every push to your main branch will trigger automatic deployment
+
+### What the deployment includes:
+- ASP.NET Core Web API (.NET 9)
+- Static file serving for Vue.js client from `wwwroot`
+- Configured for Azure App Service
+- WebSocket/SSE support enabled
+
+See [GITHUB_ACTIONS_SETUP.md](./GITHUB_ACTIONS_SETUP.md) for detailed step-by-step deployment instructions.
 
 
