@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: 'your-app-name'    # Set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: './server'
+  AZURE_WEBAPP_NAME: 'testsse'    # Set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: './server-side-events/server'
   DOTNET_VERSION: '9.0.x'
 
 jobs:

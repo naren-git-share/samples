@@ -39,14 +39,32 @@ git push origin main
 4. Click **Authorize** and sign in to GitHub
 5. Select:
    - **Organization**: Your GitHub username/org
-   - **Repository**: Your repository name
+   - **Repository**: Your repository name (e.g., `samples`)
    - **Branch**: main (or master)
 6. Azure will automatically:
-   - Create the workflow file in `.github/workflows/`
+   - Create the workflow file in `.github/workflows/` at the repository root
    - Add the publish profile as a GitHub secret
    - Trigger the first deployment
 
-### Step 4: Monitor Deployment
+**Important**: If your project is in a subfolder (like `server-side-events`), you'll need to update the workflow file paths after Azure creates it.
+
+### Step 4: Update Workflow Paths (For Monorepo/Subfolder Projects)
+
+If your project is NOT at the root of the repository:
+
+1. Azure will create a workflow file at `.github/workflows/` in your repository root
+2. You need to update the paths to point to your project folder
+3. Edit the workflow file and update `AZURE_WEBAPP_PACKAGE_PATH`:
+   ```yaml
+   env:
+     AZURE_WEBAPP_NAME: 'your-app-name'
+     AZURE_WEBAPP_PACKAGE_PATH: './server-side-events/server'  # Add path from repo root
+     DOTNET_VERSION: '9.0.x'
+   ```
+4. Also ensure all `working-directory` references use the correct path
+5. Commit and push the changes
+
+### Step 5: Monitor Deployment
 
 1. Go to your GitHub repository
 2. Click **Actions** tab

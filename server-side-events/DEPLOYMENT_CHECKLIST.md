@@ -51,9 +51,15 @@ git push -u origin main
 7. Click **Save**
 
 Azure will automatically:
-- Create `.github/workflows/azure-webapps-dotnet-core.yml` in your repository
+- Create `.github/workflows/azure-webapps-dotnet-core.yml` in your repository root
 - Add `AZURE_WEBAPP_PUBLISH_PROFILE` as a GitHub secret
 - Trigger the first deployment
+
+**⚠️ Important for Monorepo/Subfolder Projects:**
+If your project is in a subfolder (like `server-side-events/server`), you MUST update the workflow file's `AZURE_WEBAPP_PACKAGE_PATH` to point to the correct folder:
+```yaml
+AZURE_WEBAPP_PACKAGE_PATH: './server-side-events/server'
+```
 
 ## ☑️ Step 4: Monitor Deployment
 
