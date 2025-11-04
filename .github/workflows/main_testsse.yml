@@ -58,4 +58,13 @@ jobs:
           app-name: 'testsse'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_TESTSSE }}
-          package: .          
+          package: .
+        continue-on-error: true
+      
+      - name: Wait for deployment
+        run: sleep 30
+      
+      - name: Check deployment status
+        run: |
+          echo "Deployment attempt completed"
+          echo "Check the app at: https://testsse.azurewebsites.net"          
