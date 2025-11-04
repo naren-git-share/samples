@@ -6,11 +6,9 @@ on:
       - main
   workflow_dispatch:
 
-
-  defaults:
-    run:
-      working-directory: server-side-events/server
-
+defaults:
+  run:
+    working-directory: server-side-events/server
 
 jobs:
   build:
