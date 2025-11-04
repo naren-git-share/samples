@@ -58,11 +58,17 @@ jobs:
         with:
           name: .net-app
 
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7454B1872B0D43D0B91651642AB28A2A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C9B7A9C08E904A3EBA8812811B72CF14 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_EB2456E0292C423B8396F7651712C458 }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'testsse'
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .          
