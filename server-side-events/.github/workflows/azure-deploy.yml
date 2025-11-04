@@ -6,17 +6,17 @@ on:
       - main
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: server-side-events/server
-
 env:
   AZURE_WEBAPP_NAME: 'testsse'    # Set this to your application's name
   DOTNET_VERSION: '9.0.x'
+  PROJECT_PATH: 'server-side-events/server'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.PROJECT_PATH }}
     
     steps:
     - name: 'Checkout GitHub Action'
